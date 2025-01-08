@@ -1,0 +1,3 @@
+{{- range .artifacts}}
+{{ (split "/" .purl)._1}}:{{ (replace "@" ":" (split "/" .purl)._2 ) }}
+{{- end}}
