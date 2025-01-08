@@ -65,6 +65,17 @@ def health(as_of, current, latest):
     return score
 
 
+def plot(scores):
+    currency = [entry['currency'] for entry in scores]
+    ecosystem = [entry['ecosystem'] for entry in scores]
+    label = [entry['artifactId'] for entry in scores]
+    plt.scatter(ecosystem, currency)
+    plt.xlabel('Currency of components')
+    plt.ylabel('Recency of ecosystem updates')
+    plt.title('Technical debt of application')
+    plt.show()
+
+
 if __name__ == '__main__':
     now = int(time.time())
     scores = []
@@ -73,18 +84,8 @@ if __name__ == '__main__':
             gav = extract_gav(line)
             if gav is None or "groupId" not in gav or "artifactId" not in gav:
                 continue
-            health_score = health(now, find_date(gav), find_latest(gav))
-            scores.append(health_score)
-            #currency.append(0 if "currency" not in health_score else health_score["currency"])
-            #ecosystem.append(0 if "ecosystem" not in health_score else health_score["ecosystem"])
-            #label.append(health_score["artifactId"])
-            print(health_score)
-    currency = [entry['currency'] for entry in scores]
-    ecosystem = [entry['ecosystem'] for entry in scores]
-    label = [entry['artifactId'] for entry in scores]
-    plt.scatter(ecosystem, currency)
-    plt.xlabel('Latest')
-    plt.ylabel('Ecosystem')
-    plt.title('Generay currency of application')
-    plt.show()
+            score = health(now, find_date(gav), find_latest(gav))
+            print(score)
+            scores.append(score)
+    plot(scores)
  
