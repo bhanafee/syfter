@@ -15,5 +15,5 @@ if __name__ == '__main__':
             healthscore = score.health(now, augment.find_date(gav), augment.find_latest(gav))
             print(healthscore)
             scores.append(healthscore)
-    plot.plot(scores, 180)
+    plot.plot(scores)
  
